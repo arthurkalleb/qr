@@ -1,0 +1,5 @@
+streamlit==1.24.0
+opencv-python==4.8.0.76
+pyzbar==0.1.9
+streamlit-webrtc==0.43.0
+av==10.0.0
