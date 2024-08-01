@@ -1,5 +1,5 @@
 import cv2
-import qreader
+import pyzxing
 import streamlit as st
 from streamlit_webrtc import webrtc_streamer, VideoTransformerBase
 import av
@@ -9,15 +9,15 @@ class VideoTransformer(VideoTransformerBase):
     def __init__(self):
         self.overlay_active = False
         self.video_frame = None
+        self.zxing_reader = pyzxing.BarCodeReader()
 
     def transform(self, frame):
         img = frame.to_ndarray(format="bgr24")
-        detector = qreader.QRCodeDetector()
-        retval, decoded_info, points, straight_qrcode = detector(img)
+        decoded_objects = self.zxing_reader.decode(img)
 
-        if retval:
-            for info in decoded_info:
-                print(f"QR Code Data: {info}")
+        if decoded_objects:
+            for obj in decoded_objects:
+                print(f"QR Code Data: {obj['parsed']}")
                 self.overlay_active = True
 
         if self.overlay_active:
