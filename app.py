@@ -4,9 +4,10 @@ import streamlit as st
 from streamlit_webrtc import webrtc_streamer, VideoTransformerBase
 import av
 
+
 class VideoTransformer(VideoTransformerBase):
     def __init__(self):
-        self.video_capture = cv2.VideoCapture('video.mp4')
+        self.video_capture = cv2.VideoCapture('path/to/video.mp4')
         self.overlay_active = False
         self.video_frame = None
 
@@ -39,11 +40,13 @@ class VideoTransformer(VideoTransformerBase):
         frame[y:y+h, x:x+w] = video_frame
         return frame
 
+
 def main():
     st.title("Magipix-like AR with Streamlit")
     st.write("Scan a QR code to see the AR video overlay.")
 
     webrtc_streamer(key="example", video_transformer_factory=VideoTransformer)
+
 
 if __name__ == "__main__":
     main()
